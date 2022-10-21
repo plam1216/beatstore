@@ -118,6 +118,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Add this variable to specify where successful logins should redirect to
+LOGIN_REDIRECT_URL = '/beats/'
+
+# Add this variable to specify where logging out redirects to
+LOGOUT_REDIRECT_URL = '/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 

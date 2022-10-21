@@ -9,4 +9,5 @@ urlpatterns = [
     path('beats/create/', views.BeatCreate.as_view(), name='beats_create'),
     path('beats/<int:pk>/update/', views.BeatUpdate.as_view(), name='beats_update'),
     path('beats/<int:pk>/delete/', views.BeatDelete.as_view(), name='beats_delete'),
+    path('beats/<int:beat_id>/add_audio/', views.add_audio, name='add_audio'),
 ]

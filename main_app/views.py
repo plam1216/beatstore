@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from .models import Beat, Producer
+import uuid
+import boto3
+from .models import Beat, Audio
+
+S3_BASE_URL = 'https://s3.us-east-1.amazonaws.com/'
+BUCKET = 'beatstore-titans'
 
 # Create your views here.
 def home(request):
@@ -20,12 +25,34 @@ def beats_index(request):
 
 def beats_detail(request, beat_id):
     beat = Beat.objects.get(id=beat_id)
-    return render(request, 'beats/detail.html', { 'beat': beat})
+    return render(request, 'beats/detail.html', { 'beat': beat })
+
+
+def add_audio(request, beat_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    audio_file = request.FILES.get('audio-file', None)
+    if audio_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + audio_file.name[audio_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(audio_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            audio = Audio(url=url, beat_id=beat_id)
+            audio.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('beats_detail', beat_id=beat_id)
+
 
 class BeatCreate(CreateView):
     model = Beat
     # fields = '__all__'
-    fields = ['name', 'genre', 'url']
+    fields = ['name', 'genre']
+    # fields = ['name', 'genre', 'audio']
     # success_url = '/beats/'
 
     # method is called when a form has been POSTed

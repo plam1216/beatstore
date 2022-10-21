@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Beats Index</h1>
+<!-- 'beats' is passed down from 'beat_index' function in '/main_app.views' -->
+{% for beat in beats %}
+<a href="{% url 'beats_detail' beat.id %}">
+    <div>
+        <p>
+            {{ beat.name }}
+        </p>
+    </div>
+</a>
+{% endfor %}
+{% endblock %}

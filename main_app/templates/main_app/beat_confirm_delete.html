@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Delete Beat</h1>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes - Delete!" class="btn"/>
+    <a href="{% url 'beats_detail' beat.id %}">Cancel</a>
+</form>
+{% endblock %}

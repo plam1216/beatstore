@@ -1,36 +1,85 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Beats Detail</h1>
+<h1>Beats Detailddd</h1>
 <div class="row">
-    <div class="col s6">
-        <p> Name: {{ beat.name }} </p>
-        <p> Genre: {{ beat.genre }} </p>
-        <p> Audio: {{ beat.audio }} </p>
+    <div class="card-panel">
+        <!-- <div> -->
+        <div class="col s6">
+            <p> Name: {{ beat.name }} </p>
+            <p> Genre: {{ beat.genre }} </p>
+        </div>
+        <!-- <p> Audio: {{ beat.audio }} </p> -->
 
-        <audio controls>
-            <source src='{{ beat.audio }}' type="audio/mp3">
-        </audio>
+        <div class="col s6">
+
+            <!-- <audio controls> -->
+            <audio>
+                <source> ='{{ beat.audio }}' type="audio/mp3" </source>
+            </audio>
+            <!-- </div> -->
+
+            <!-- <div class="col s6"> -->
+            {% for audio in beat.audio_set.all %}
+            {% if forloop.last %}
+            <audio controls>
+                <source src="{{ audio.url }} " type="audio/mp3">
+            </audio>
+            {% endif %}
+            {% empty %}
+            <div class="card-panel teal-text center-align">No Audio Uploaded</div>
+            {% endfor %}
+
+            <form action="{% url 'add_audio' beat.id %}" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input type="file" name="audio-file" />
+                <br /><br />
+                <input type="submit" class="btn" value="Upload Audio" />
+            </form>
+        </div>
         <div class="card-action">
             <a href="{% url 'beats_update' beat.id %}">Edit</a>
             <a href="{% url 'beats_delete' beat.id %}">Delete</a>
         </div>
     </div>
-
-    <div class="col s6">
-        {% for audio in beat.audio_set.all %}
-        <audio controls>
-            <source src="{{ audio.url }} " type="audio/mp3">
-        </audio>
-        {% empty %}
-        <div class="card-panel teal-text center-align">No Audio Uploaded</div>
-        {% endfor %}
-    </div>
-
-    <form action="{% url 'add_audio' beat.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
-        {% csrf_token %}
-        <input type="file" name="audio-file" />
-        <br /><br />
-        <input type="submit" class="btn" value="Upload Audio" />
-    </form>
 </div>
+
+<div class="row">
+    <div class="col s6">
+        <h3> {{ beat.name }} Produced By: </h3>
+        {% if beat.producers.count %}
+        {% for producer in beat.producers.all %}
+        <div class="card">
+            <p>
+                {{ producer.name }}, @{{ producer.ig }}
+            </p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h3> No Credits </h3>
+        {% endif %}
+    </div>
+</div>
+
+<div class="col s6">
+    <h3>Producers</h3>
+    {% if producers.count %}
+    {% for producer in producers.all %}
+    <p>{{producer.name}}</p>
+
+    <form action="{% url 'assoc_producer' beat.id producer.id%}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn">Add</button>
+    </form>
+
+    {% endfor %}
+    {% else %}
+    <h3> No Producers Available </h3>
+    {% endif %}
+</div>
+
+<script>
+    $("player").play();
+    $("player").pause();
+</script>
+
 {% endblock %}

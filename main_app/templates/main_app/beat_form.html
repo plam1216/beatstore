@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- Leaving the action empty makes the form post to the same url used to display it -->
-<!-- enctype required to submit file assets to a server -->
-<form action="" method="post" enctype="multipart/form-data" class="card-panel">
-    {% csrf_token %}
-    <table>
-        {{form.as_table}}
-    </table>
-    <input type="submit" value="Submit" class="btn">
-</form>
+<div class="container">
+    <h1>Add Beat</h1>
+
+    <!-- Leaving the action empty makes the form post to the same url used to display it -->
+    <!-- enctype required to submit file assets to a server -->
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
+        <input type="submit" value="Submit" class="btn">
+    </form>
+</div>
 {% endblock %}

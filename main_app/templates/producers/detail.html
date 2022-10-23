@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h3>
+        {{ producer.name }}
+    </h3>
+    <div>
+        <div class="row">
+            <div class="col s4 beat-index-titles">
+                IG
+            </div>
+            <div class="col s2 beat-index-titles">
+                Twitter
+            </div>
+            <div class="col s2 beat-index-titles">
+                TikTok
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s4">
+                <p class="tracklist track-name">{{ producer.IG }}</p>
+            </div>
+            <div class="col s2">
+                <p class="tracklist track-name">{{ producer.twitter }}</p>
+            </div>
+            <div class="col s2">
+                <p class="tracklist track-name">{{ producer.tiktok }}</p>
+            </div>
+            <div class="col s2">
+                <a href="{% url 'producers_update' producer.id %}" style="margin-right: 10px">
+                    <input class="btn" type="submit" value="Edit">
+                </a>
+            </div>
+            <div class="col s2">
+                <a href="{% url 'producers_delete' producer.id %}">
+                    <input class="btn" type="submit" value="Delete">
+                </a>
+            </div>
+        </div>
+        <div class="col s6 divider"></div>
+
+        <br />
+
+        <h4>Credits</h4>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

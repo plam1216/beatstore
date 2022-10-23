@@ -4,6 +4,18 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+# logs in user (GET request)
+from django.contrib.auth import login
+
+# creates user (POST request)
+from django.contrib.auth.forms import UserCreationForm
+
+# authorization for functions
+from django.contrib.auth.decorators import login_required
+
+# authorization for CBV
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 import uuid
 import boto3
 from .models import Beat, Producer
@@ -20,10 +32,30 @@ def about(request):
     # return HttpResponse('About working!')
     return render(request, 'about.html')
 
+def signup(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # add user to database
+            user = form.save()
+
+            login(request, user)
+            return redirect('beats_index')
+        else:
+            error_message = 'Invalid sign up - try again'
+    # A bad GET or POST request so page will rerender 'signup.html' with empty form
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)
+
+
+@login_required
 def beats_index(request):
     beats = Beat.objects.all()
     return render(request, 'beats/index.html', { 'beats': beats })
 
+@login_required
 def beats_detail(request, beat_id):
     beat = Beat.objects.get(id=beat_id)
 
@@ -50,11 +82,12 @@ def beats_detail(request, beat_id):
 #             print('An error occurred uploading file to S3')
 #     return redirect('beats_detail', beat_id=beat_id)
 
+@login_required
 def assoc_producer(request, beat_id, producer_id):
     Beat.objects.get(id=beat_id).producers.add(producer_id)
     return redirect('beats_detail', beat_id=beat_id)
 
-class BeatCreate(CreateView):
+class BeatCreate(LoginRequiredMixin, CreateView):
     model = Beat
     # fields = '__all__'
     fields = ['name', 'genre', 'bpm', 'key', 'image', 'audio']
@@ -66,30 +99,30 @@ class BeatCreate(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class BeatUpdate(UpdateView):
+class BeatUpdate(LoginRequiredMixin, UpdateView):
     model = Beat
     fields = ['name', 'genre', 'bpm', 'key', 'image', 'audio']
 
-class BeatDelete(DeleteView):
+class BeatDelete(LoginRequiredMixin, DeleteView):
     model = Beat
     success_url = '/beats/'
 
-class ProducerList(ListView):
+class ProducerList(LoginRequiredMixin, ListView):
     model = Producer
     template_name = 'producers/index.html'
 
-class ProducerCreate(CreateView):
+class ProducerCreate(LoginRequiredMixin, CreateView):
     model = Producer
     fields = ['name', 'IG', 'twitter', 'tiktok']
 
-class ProducerDetail(DetailView):
+class ProducerDetail(LoginRequiredMixin, DetailView):
     model = Producer
     template_name = 'producers/detail.html'
 
-class ProducerUpdate(UpdateView):
+class ProducerUpdate(LoginRequiredMixin, UpdateView):
     model = Producer
     fields = ['name', 'IG', 'twitter', 'tiktok']
 
-class ProducerDelete(DeleteView):
+class ProducerDelete(LoginRequiredMixin, DeleteView):
     model = Producer
     success_url = '/producers/'

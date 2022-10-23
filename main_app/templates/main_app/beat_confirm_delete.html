@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Delete Beat</h1>
-<form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn"/>
-    <a href="{% url 'beats_detail' beat.id %}">Cancel</a>
-</form>
+<div class="container">
+    <h4>Are you sure you want to delete:</h4>
+
+    <h4 style="text-decoration: underline"> {{ beat.name }} </h4>
+
+    <h5>
+        Prod by: 
+        <!-- Loops through M:M 'producers' key to show every producer associated with the beat -->
+        {% for producer in beat.producers.all %}
+        {{ producer.name }}
+        {% endfor %}
+    </h5>
+
+    <div>
+        <img src="{{ beat.image.url }}" class="coverart" style="display:block; margin: 20px auto 0 auto;" />
+    </div>
+
+    <br />
+
+    <div class="card-action delete-cancel">
+        <form action="" method="POST" style="display: inline-block;">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Yes - Delete!" />
+        </form>
+
+        <a href="{% url 'beats_detail' beat.id %}" style="display: inline-block;">
+            <input class="btn" type="submit" value="Cancel" />
+        </a>
+    </div>
+</div>
 {% endblock %}

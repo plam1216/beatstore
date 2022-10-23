@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Add Beat</h1>
-
+    <h3>Add a Beat</h3>
     <!-- Leaving the action empty makes the form post to the same url used to display it -->
     <!-- enctype required to submit file assets to a server -->
     <form action="" method="post" enctype="multipart/form-data">
@@ -10,7 +9,7 @@
         <table>
             {{form.as_table}}
         </table>
-        <input type="submit" value="Submit" class="btn">
+        <input class="btn" type="submit" value="Submit" />
     </form>
 </div>
 {% endblock %}

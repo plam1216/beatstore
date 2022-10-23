@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Producer Delete</h1>
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Yes - Delete!" class="btn"/>
-        <a href="{% url 'producers_detail' producer.id %}">Cancel</a>
-    </form>
+    <h4>Are you sure you want to delete:</h4>
+
+    <h4 style="text-decoration: underline"> {{ producer.name }} </h4>
+
+    <div class="card-action delete-cancel">
+        <form action="" method="POST" style="display: inline-block;">
+            {% csrf_token %}
+            <input class="btn" type="submit" value="Yes - Delete!" />
+        </form>
+
+        <a href="{% url 'producers_detail' producer.id %}" style="display: inline-block;">
+            <input class="btn" type="submit" value="Cancel" />
+        </a>
+    </div>
 </div>
 {% endblock %}

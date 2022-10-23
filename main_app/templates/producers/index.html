@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h3>Producers</h3>
+    {% if user.is_authenticated %}
+    <div class="row">
+        <div class="row">
+            <div class="col s6 beat-index-titles">
+                Producer
+            </div>
+            <div class="col s2 beat-index-titles">
+                IG
+            </div>
+            <div class="col s2 beat-index-titles">
+                Twitter
+            </div>
+            <div class="col s2 beat-index-titles">
+                TikTok
+            </div>
+        </div>
+        <!-- 'beats' is passed down from 'beat_index' function in '/main_app.views' -->
+        {% for producer in producer_list %}
+        <div>
+            <a href="{% url 'producers_detail' producer.id %}">
+                <div class="row">
+                    <div class="col s6">
+                        <p class="tracklist track-name">{{ producer.name }}</p>
+                    </div>
+                    <div class="col s2">
+                        <p class="tracklist track-name">{{ producer.IG }}</p>
+                    </div>
+                    <div class="col s2">
+                        <p class="tracklist track-name">{{ producer.twitter }}</p>
+                    </div>
+                    <div class="col s2">
+                        <p class="tracklist track-name">{{ producer.tiktok }}</p>
+                    </div>
+            </a>
+            <div class="col s12 divider"></div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

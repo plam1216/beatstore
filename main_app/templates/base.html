@@ -7,44 +7,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://imgur.com/pQNNdDd.jpg">
+
     <title>Beat Store</title>
+
+    <!-- Materialize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+
+    <!-- Materialize Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
     <link rel="stylesheet" type="text/css" href="{% static 'beatstore/style.css' %}" />
+
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Materialize JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 
 <body>
     <header class="navbar-fixed">
+
+        <!-- nav dropdown for 'Beats' -->
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="{% url 'beats_index' %}">All Beats</a></li>
+            <li><a href="{% url 'my_beats' %}">My Beats</a></li>
             <li class="divider"></li>
             <li><a href="{% url 'beats_create' %}">Add Beat</a></li>
-            <!-- <li><a href="#!">three</a></li> -->
         </ul>
+        <!-- nav dropdown for 'Producers' -->
         <ul id="dropdown2" class="dropdown-content">
             <li><a href="{% url 'producers_index' %}">All Producers</a></li>
             <li class="divider"></li>
             <li><a href="{% url 'producers_create' %}">Add Producer</a></li>
-            <!-- <li><a href="#!">three</a></li> -->
         </ul>
+
         <nav>
             <div class="nav-wrapper">
-                <a href="{% url 'beats_index' %}" style="height: 100%">
+                <a href="{% url 'home' %}" style="height: 100%">
                     <img src="https://imgur.com/pQNNdDd.jpg" id="beatstars-logo" />
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a>About</a></li>
-                    <!-- Dropdown Trigger -->
+                    <li><a href="{% url 'about' %}">About</a></li>
                     {% if user.is_authenticated %}
+                    <!-- Dropdown Trigger - 'Beats' -->
                     <li>
                         <a class="dropdown-trigger" href="#!" data-target="dropdown1" style="padding-right: 0">
                             Beats
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
-                    <!-- Dropdown Trigger -->
+
+                    <!-- Dropdown Trigger - 'Producers' -->
                     <li>
                         <a class="dropdown-trigger" href="#!" data-target="dropdown2" style="padding-right: 0">
                             Producers
@@ -53,62 +75,41 @@
                     </li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
+                    <li><a href="{% url 'beats_index' %}">Shop</a></li>
+                    <li><a href="{% url 'producers_index' %}">Producers</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     <li><a href="{% url 'login' %}">Login</a></li>
                     {% endif %}
-
                 </ul>
             </div>
         </nav>
-        <!-- <nav>
-            <div class="nav-wrapper" style="background-color: black">
-                <a href="{% url 'beats_index' %}" style="height: 100%">
-                    <img src="https://imgur.com/pQNNdDd.jpg" id="beatstars-logo" />
-                </a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a>About</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'beats_create' %}">Add Beat</a></li>
-                    <li><a href="{% url 'beats_index' %}">Beats</a></li>
-                    <li><a href="{% url 'producers_create' %}">Add Producer</a></li>
-                    <li><a href="{% url 'producers_index' %}">Producers</a></li>
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                    {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav> -->
     </header>
 
-    <main class="container">
+    <main>
         {% block content %}
         {% endblock %}
     </main>
 
 
     <footer class="page-footer">
-        <!-- <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer
-                        content.</p>
+        <div class="container">
+            <div class="row" style="margin: 0;">
+                <div class="col s1 offset-s2">
+                    <a href="https://www.linkedin.com/in/plam1216/">
+                        <img src="https://imgur.com/iNQ3ami.png" alt="linkedin" class="social-icons">
+                    </a>
                 </div>
-                <div class="col l4 offset-l2 s12">
-                    <h5 class="white-text">Links</h5>
-                    <ul>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                        <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                    </ul>
+                <div class="col s1">
+                    <a href="https://github.com/plam1216">
+                        <img src="https://imgur.com/noZk2jh.png" alt="github" class="social-icons"
+                            style="background-color: white; border-radius: 24px;">
+                    </a>
+                </div>
+                <div class="col s3 offset-s5">
+                    <span style="font-size: 1.2rem;">© 2022 Peter Lam</span>
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="footer-copyright"> -->
-            <div class="container">
-                © 2014 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-        <!-- </div> -->
+        </div>
     </footer>
 
 </body>

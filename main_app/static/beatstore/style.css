@@ -1,0 +1,155 @@
+:root {
+    --main-color: #000000;
+    --secondary-color: #286e9f;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-image: linear-gradient(var(--main-color), var(--secondary-color));
+    background-attachment: fixed;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* ---------- NAVBAR ---------- */
+nav>.nav-wrapper {
+    background-color: black;
+}
+
+.dropdown-content li>a {
+    color: white;
+    background-color: var(--secondary-color);
+    text-align: center;
+}
+
+i.right {
+    margin: 0;
+}
+
+#beatstars-logo {
+    height: 75%;
+    vertical-align: middle;
+}
+
+.card-action.delete-cancel {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5 {
+    text-align: center;
+}
+
+.home-bg {
+    background-image: url(https://imgur.com/nzZ6aCE.jpg);
+    width: 100vw;
+    height: 100vh;
+    background-size:cover;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+/* ---------- FORMS ---------- */
+th {
+    text-align: center;
+    padding: 0;
+}
+
+label {
+    color: white;
+    font-size: 1.2rem;
+}
+
+form > p > span.helptext {
+    font-size: 14px;
+}
+
+.btn, .btn-large, .btn-small, .btn-flat {
+    display: block;
+    margin: auto;
+    background-color: var(--secondary-color);
+}
+
+/* ---------- BEAT DETAILS ---------- */
+.coverart {
+    object-fit: cover;
+    width: 180px;
+    height: 180px;
+}
+
+.coverart-index {
+    width: 45px;
+    height: 45px;
+}
+
+.beat-index-titles {
+    color: rgb(195, 194, 194)
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+.tracklist {
+    font-size: 1.5rem;
+    line-height: 45px;
+}
+
+.track-title {
+    text-align: left; 
+    margin: 0 0 10px 0; 
+    font-weight: 600;
+}
+
+.track-detail {
+    font-size: 1.2rem;
+    line-height: 25px;
+}
+
+.track {
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+/* ---------- COMMENTS ---------- */
+.comment {
+    margin: 5px 0 5px 0;
+    font-size: 1rem;
+}
+
+/* ---------- FOOTER ---------- */
+.page-footer {
+    background-color: var(--main-color);
+    padding: 15px 0 5px 0;
+    width: 100vw;
+}
+
+.social-icons {
+    width: 30px;
+    height: auto;
+}
+
+/* ---------- ABOUT PAGE ---------- */
+#about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+#about > p {
+    font-size: 1rem;
+    width: 75vh;
+}

@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Home</h1>
+<div class="card home-bg">
+    {% if user.is_authenticated %}
+    <h3 style="margin-top: 0; padding-top: 75px;">
+        Hello {{user.get_username}}!
+    </h3>
+    {% endif %}
+</div>
 {% endblock %}

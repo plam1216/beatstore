@@ -1,85 +1,154 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Beats Detailddd</h1>
-<div class="row">
-    <div class="card-panel">
-        <!-- <div> -->
-        <div class="col s6">
-            <p> Name: {{ beat.name }} </p>
-            <p> Genre: {{ beat.genre }} </p>
+<!-- Limited Features for Users who are not logged in -->
+
+<div class="container" style="width: 85%; margin-top: 50px">
+    <!-- TOP SECTION; BEAT DETAILS -->
+    <div class="row">
+        <div class="col s3" style="text-align: center;">
+            <!-- 'url' is from AWS -->
+            <img src="{{ beat.image.url }}" alt="{{ beat.name }}" class="coverart" />
         </div>
-        <!-- <p> Audio: {{ beat.audio }} </p> -->
+        <div class="col s9">
+            <h4 class="track track-title">{{ beat.name }}</h4>
+            <p class="track-detail track">Genre: {{ beat.genre }}</p>
+            <p class="track-detail track">BPM: {{ beat.bpm }}</p>
+            <p class="track-detail track">Key: {{ beat.key }}</p>
 
-        <div class="col s6">
-
-            <!-- <audio controls> -->
-            <audio>
-                <source> ='{{ beat.audio }}' type="audio/mp3" </source>
-            </audio>
-            <!-- </div> -->
-
-            <!-- <div class="col s6"> -->
-            {% for audio in beat.audio_set.all %}
-            {% if forloop.last %}
-            <audio controls>
-                <source src="{{ audio.url }} " type="audio/mp3">
-            </audio>
+            <!-- Edit & Delete available only if logged in -->
+            {% if user.is_authenticated %}
+            <div class="card-action" style="margin-top: 25px">
+                <a href="{% url 'beats_update' beat.id %}" style="display: inline-block; margin-right: 10px">
+                    <input class="btn" type="submit" value="Edit">
+                </a>
+                <a href="{% url 'beats_delete' beat.id %}" style="display: inline-block;">
+                    <input class="btn" type="submit" value="Delete">
+                </a>
+            </div>
             {% endif %}
-            {% empty %}
-            <div class="card-panel teal-text center-align">No Audio Uploaded</div>
-            {% endfor %}
-
-            <form action="{% url 'add_audio' beat.id %}" enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                <input type="file" name="audio-file" />
-                <br /><br />
-                <input type="submit" class="btn" value="Upload Audio" />
-            </form>
-        </div>
-        <div class="card-action">
-            <a href="{% url 'beats_update' beat.id %}">Edit</a>
-            <a href="{% url 'beats_delete' beat.id %}">Delete</a>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col s6">
-        <h3> {{ beat.name }} Produced By: </h3>
-        {% if beat.producers.count %}
-        {% for producer in beat.producers.all %}
-        <div class="card">
-            <p>
-                {{ producer.name }}, @{{ producer.ig }}
-            </p>
+    <!-- AUDIO PLAYER -->
+    <audio controls>
+        <!-- 'url' is from AWS -->
+        <source src="{{ beat.audio.url }}" type="audio/mp3" />
+    </audio>
+
+    <br />
+    <br />
+
+    <!-- 'assoc_producer' & 'unassoc_producer' -->
+    <!-- if user is logged in allow them to add/delete credits -->
+    {% if user.is_authenticated %}
+    <div class="row">
+        <div class="col s6">
+            <!-- CREDITS -->
+            <h4 style="text-decoration: underline;">Credits</h4>
+            {% if beat.producers.count %}
+            {% for producer in beat.producers.all %}
+            <div class="row">
+                <a href="{% url 'producers_detail' producer.id %}">
+                    <p class="col s5 offset-s2 track">
+                        {{ producer.name }}
+                    </p>
+                    <form class="col 1" action="{% url 'unassoc_producer' beat.id producer.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Remove</button>
+                    </form>
+                </a>
+            </div>
+            {% endfor %}
+
+            {% else %}
+            <h5> No Producers Credited... </h5>
+            {% endif %}
         </div>
-        {% endfor %}
-        {% else %}
-        <h3> No Credits </h3>
+
+        <div class="row">
+            <div class="col s6">
+                <!-- PRODUCER LIST -->
+                <h4 style="text-decoration: underline;">Producer List</h4>
+                {% if producers.count %}
+                {% for producer in producers.all %}
+                <div class="row">
+                    <a href="{% url 'producers_detail' producer.id %}">
+                        <p class="col s5 offset-s4 track">
+                            {{ producer.name }}
+                        </p>
+                    </a>
+                    <form class="col 1" action="{% url 'assoc_producer' beat.id producer.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Add</button>
+                    </form>
+                </div>
+                {% endfor %}
+
+                {% else %}
+                <h5> No Producers Available </h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- if not logged in only show credits -->
+    {% else %}
+    <div class="row">
+        <div class="col s12">
+            <h4 style="text-decoration: underline;">Credits</h4>
+            {% if beat.producers.count %}
+            {% for producer in beat.producers.all %}
+            <a href="{% url 'producers_detail' producer.id %}">
+                <p class="col s7 offset-s5" style="padding: 0;">
+                    {{ producer.name }}
+                </p>
+            </a>
+            {% endfor %}
+            {% else %}
+            <h5> No Producers Credited... </h5>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <br />
+    <br />
+
+    <!-- COMMENTS -->
+    <div class="row card" style="background-color: rgba(0, 0, 0, 0.8); padding: 10px 0 10px 0;">
+        <div class="col s12">
+            <h5 style="margin: 0">Comments</h5>
+            {% for comment in beat.comment_set.all %}
+            <div class="col s6 offset-s1">
+                <p class="comment">
+                    <!-- {{ user.get_username }} -->
+                    {{ comment.message }}
+                </p>
+            </div>
+            {% empty %}
+            <div class="col s12">
+                <div class="col s8 offset-s1">
+                    <p class="comment">No Comments</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- if a user is logged in allow commenting -->
+        {% if user.is_authenticated %}
+        <div class="col s12 divider"></div>
+        <div class="col s12" style="line-height: 1rem; margin-top: 15px;">
+            <form action="{% url 'add_comment' beat.id %}" method="post">
+                {% csrf_token %}
+                <div class="col s5 offset-s3 comment">
+                    {{ comment_form.as_p }}
+                </div>
+                <div class="col s2">
+                    <input class="btn" type="submit" value="Submit" style="margin-top: 25px;">
+                </div>
+            </form>
+        </div>
         {% endif %}
     </div>
 </div>
-
-<div class="col s6">
-    <h3>Producers</h3>
-    {% if producers.count %}
-    {% for producer in producers.all %}
-    <p>{{producer.name}}</p>
-
-    <form action="{% url 'assoc_producer' beat.id producer.id%}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn">Add</button>
-    </form>
-
-    {% endfor %}
-    {% else %}
-    <h3> No Producers Available </h3>
-    {% endif %}
-</div>
-
-<script>
-    $("player").play();
-    $("player").pause();
-</script>
-
 {% endblock %}

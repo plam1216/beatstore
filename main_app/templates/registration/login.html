@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h1>Login</h1>
+    <h3>Login</h3>
 
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        {{ form.as_p}}
+        {{ form.as_p }}
+        <br/>
         <input type="submit" class="btn" value="login">
         <!-- redirect user that tries to access a protected route back to that route after they login -->
         <input type="hidden" class="next" value="{{ next }}">

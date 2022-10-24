@@ -71,7 +71,9 @@ def producers_index(request):
 def producers_detail(request, producer_id):
     producer = Producer.objects.get(id=producer_id)
     producer_beats = producer.beat_set.all()
-    return render(request, 'producers/detail.html', {'producer': producer, 'producer_beats': producer_beats})
+    awsurl = f"{S3_BASE_URL}{BUCKET}"
+
+    return render(request, 'producers/detail.html', {'producer': producer, 'producer_beats': producer_beats, 'awsurl': awsurl})
 
 @login_required
 def my_beats(request):

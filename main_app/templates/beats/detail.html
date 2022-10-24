@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col s3" style="text-align: center;">
             <!-- 'url' is from AWS -->
-            <img src="{{ beat.image.url }}" alt="{{ beat.name }}" class="coverart" />
+            <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}" class="coverart" />
         </div>
         <div class="col s9">
             <h4 class="track track-title">{{ beat.name }}</h4>
@@ -31,8 +31,7 @@
 
     <!-- AUDIO PLAYER -->
     <audio controls>
-        <!-- 'url' is from AWS -->
-        <source src="{{ beat.audio.url }}" type="audio/mp3" />
+        <source src="{{ awsurl }}/{{ beat.audio }}" type="audio/mp3" />
     </audio>
 
     <br />

@@ -24,7 +24,7 @@
             <a href="{% url 'beats_detail' beat.id %}">
                 <div class="row">
                     <div class="col s1">
-                        <img src="{{ beat.image.url }}" alt="{{ beat.name }}" class="coverart coverart-index" />
+                        <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}" class="coverart coverart-index" />
                     </div>
                     <div class="col s6">
                         <p class="tracklist track">{{ beat.name }}</p>

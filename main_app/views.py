@@ -50,17 +50,19 @@ def signup(request):
 
 def beats_index(request):
     beats = Beat.objects.all()
-    return render(request, 'beats/index.html', { 'beats': beats })
+    awsurl = f"{S3_BASE_URL}{BUCKET}"
+    return render(request, 'beats/index.html', { 'beats': beats, 'awsurl': awsurl })
 
 def beats_detail(request, beat_id):
     beat = Beat.objects.get(id=beat_id)
+    awsurl = f"{S3_BASE_URL}{BUCKET}"
 
     # instantiate comment form
     comment_form = CommentForm()
 
     # get producers a beat doesn't have
     uncredited_producers = Producer.objects.exclude(id__in = beat.producers.all().values_list('id'))
-    return render(request, 'beats/detail.html', { 'beat': beat, 'producers': uncredited_producers, 'comment_form': comment_form })
+    return render(request, 'beats/detail.html', { 'beat': beat, 'producers': uncredited_producers, 'comment_form': comment_form, 'awsurl': awsurl })
 
 def producers_index(request):
     producers = Producer.objects.all()
@@ -75,7 +77,8 @@ def producers_detail(request, producer_id):
 def my_beats(request):
     curr_user = User.objects.get(id=request.user.id)
     curr_user_beats = curr_user.beat_set.all()
-    return render(request, 'my_beats.html', {'curr_user_beats': curr_user_beats})
+    awsurl = f"{S3_BASE_URL}{BUCKET}"
+    return render(request, 'my_beats.html', {'curr_user_beats': curr_user_beats, 'awsurl': awsurl})
 
 @login_required
 def assoc_producer(request, beat_id, producer_id):

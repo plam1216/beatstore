@@ -57,6 +57,7 @@
                 </a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'beats_index' %}">Shop</a></li>
                     {% if user.is_authenticated %}
                     <!-- Dropdown Trigger - 'Beats' -->
                     <li>
@@ -75,7 +76,6 @@
                     </li>
                     <li><a href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
-                    <li><a href="{% url 'beats_index' %}">Shop</a></li>
                     <li><a href="{% url 'producers_index' %}">Producers</a></li>
                     <li><a href="{% url 'signup' %}">Sign Up</a></li>
                     <li><a href="{% url 'login' %}">Login</a></li>

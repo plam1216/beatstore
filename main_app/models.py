@@ -17,10 +17,10 @@ class Producer(models.Model):
     tiktok = models.CharField(max_length=50)
     
     def __str__(self):
-        return f'{self.name}, IG: {self.ig}, Twitter: {self.twitter}, TikTok: {self.tiktok}'
+        return f'{self.name}, IG: {self.IG}, Twitter: {self.twitter}, TikTok: {self.tiktok}'
 
     def get_absolute_url(self):
-        return reverse('producers_detail', kwargs={'pk':self.id})
+        return reverse('producers_detail', kwargs={'producer_id':self.id})
 
 class Beat(models.Model):
     name = models.CharField(max_length=200)
@@ -48,4 +48,4 @@ class Comment(models.Model):
     beat = models.ForeignKey(Beat, on_delete=models.CASCADE)
 
     def __str__(self):
-        return {self.message}
+        return f'{self.message}'

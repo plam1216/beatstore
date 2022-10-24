@@ -62,6 +62,10 @@ def beats_detail(request, beat_id):
     uncredited_producers = Producer.objects.exclude(id__in = beat.producers.all().values_list('id'))
     return render(request, 'beats/detail.html', { 'beat': beat, 'producers': uncredited_producers, 'comment_form': comment_form })
 
+def producers_index(request):
+    producers = Producer.objects.all()
+    return render(request, 'producers/index.html', { 'producers': producers })
+
 def producers_detail(request, producer_id):
     producer = Producer.objects.get(id=producer_id)
     producer_beats = producer.beat_set.all()
@@ -114,17 +118,9 @@ class BeatDelete(LoginRequiredMixin, DeleteView):
     model = Beat
     success_url = '/beats/'
 
-class ProducerList(LoginRequiredMixin, ListView):
-    model = Producer
-    template_name = 'producers/index.html'
-
 class ProducerCreate(LoginRequiredMixin, CreateView):
     model = Producer
     fields = ['name', 'IG', 'twitter', 'tiktok']
-
-# class ProducerDetail(LoginRequiredMixin, DetailView):
-#     model = Producer
-#     template_name = 'producers/detail.html'
 
 class ProducerUpdate(LoginRequiredMixin, UpdateView):
     model = Producer

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h3>My Beats</h3>
+    <div class="row">
+        <div class="row">
+            <div class="col s6 offset-s1 beat-index-titles">
+                Title
+            </div>
+            <div class="col s2 beat-index-titles">
+                Genre
+            </div>
+            <div class="col s1 beat-index-titles">
+                BPM
+            </div>
+            <div class="col s2 beat-index-titles">
+                Key
+            </div>
+        </div>
+
+        <!-- 'curr_user_beats' is passed down from 'mybeats' function in '/main_app.views' -->
+        {% for beat in curr_user_beats %}
+        <div>
+            <a href="{% url 'beats_detail' beat.id %}">
+                <div class="row">
+                    <div class="col s1">
+                        <img src="{{ beat.image.url }}" alt="{{ beat.name }}" class="coverart coverart-index" />
+                    </div>
+                    <div class="col s6">
+                        <p class="tracklist track">{{ beat.name }}</p>
+                    </div>
+                    <div class="col s2">
+                        <p class="tracklist track">{{ beat.genre }}</p>
+                    </div>
+                    <div class="col s1">
+                        <p class="tracklist track">{{ beat.bpm }}</p>
+                    </div>
+                    <div class="col s2">
+                        <p class="tracklist track">{{ beat.key }}</p>
+                    </div>
+            </a>
+            <div class="col s11 offset-s1 divider"></div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

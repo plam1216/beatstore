@@ -9,7 +9,7 @@
             <!-- 'url' is from AWS -->
             <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}" class="coverart" />
         </div>
-        <div class="col s9">
+        <div class="col s6">
             <h4 class="track track-title">{{ beat.name }}</h4>
             <p class="track-detail track">Genre: {{ beat.genre }}</p>
             <p class="track-detail track">BPM: {{ beat.bpm }}</p>
@@ -26,6 +26,14 @@
                 </a>
             </div>
             {% endif %}
+        </div>
+        <div class="col s3">
+            <br /><br /><br /><br />
+            <a href="https://www.linkedin.com/in/plam1216/">
+                <button type="submit" class="btn-large deep-orange darken-4">
+                    Purchase
+                </button>
+            </a>
         </div>
     </div>
 

@@ -2,9 +2,11 @@
 {% block content %}
 <div class="card home-bg">
     {% if user.is_authenticated %}
-    <h3 style="margin-top: 0; padding-top: 75px;">
+    <h2 style="margin-top: 0; padding-top: 100px;">
         Hello {{user.get_username}}!
-    </h3>
+    </h2>
+    {% else %}
+    <h2 style="margin-top: 0; padding-top: 100px;">Welcome to BeatStars!</h2>
     {% endif %}
 </div>
 {% endblock %}

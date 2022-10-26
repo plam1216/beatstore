@@ -5,11 +5,11 @@
 <div class="container" style="width: 85%; margin-top: 50px">
     <!-- TOP SECTION; BEAT DETAILS -->
     <div class="row">
-        <div class="col s3" style="text-align: center;">
+        <div class="col s4" style="text-align: center;">
             <!-- 'url' is from AWS -->
             <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}" class="coverart" />
         </div>
-        <div class="col s6">
+        <div class="col s5" style="padding: 0">
             <h4 class="track track-title">{{ beat.name }}</h4>
             <p class="track-detail track">Genre: {{ beat.genre }}</p>
             <p class="track-detail track">BPM: {{ beat.bpm }}</p>
@@ -27,7 +27,7 @@
             </div>
             {% endif %}
         </div>
-        <div class="col s3">
+        <div class="col s2">
             <br /><br /><br /><br />
             <a href="https://www.linkedin.com/in/plam1216/">
                 <button type="submit" class="btn-large deep-orange darken-4">
@@ -38,12 +38,11 @@
     </div>
 
     <!-- AUDIO PLAYER -->
-    <audio controls>
-        <source src="{{ awsurl }}/{{ beat.audio }}" type="audio/mp3" />
-    </audio>
-
-    <br />
-    <br />
+    <div class="row audio-player">
+        <audio controls>
+            <source src="{{ awsurl }}/{{ beat.audio }}" type="audio/mp3" />
+        </audio>
+    </div>
 
     <!-- 'assoc_producer' & 'unassoc_producer' -->
     <!-- if user is logged in allow them to add/delete credits -->
@@ -72,29 +71,27 @@
             {% endif %}
         </div>
 
-        <div class="row">
-            <div class="col s6">
-                <!-- PRODUCER LIST -->
-                <h4 style="text-decoration: underline;">Producer List</h4>
-                {% if producers.count %}
-                {% for producer in producers.all %}
-                <div class="row">
-                    <a href="{% url 'producers_detail' producer.id %}">
-                        <p class="col s5 offset-s4 track">
-                            {{ producer.name }}
-                        </p>
-                    </a>
-                    <form class="col 1" action="{% url 'assoc_producer' beat.id producer.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn">Add</button>
-                    </form>
-                </div>
-                {% endfor %}
-
-                {% else %}
-                <h5> No Producers Available </h5>
-                {% endif %}
+        <div class="col s6">
+            <!-- PRODUCER LIST -->
+            <h4 style="text-decoration: underline;">Producer List</h4>
+            {% if producers.count %}
+            {% for producer in producers.all %}
+            <div class="row">
+                <a href="{% url 'producers_detail' producer.id %}">
+                    <p class="col s4 offset-s3 track">
+                        {{ producer.name }}
+                    </p>
+                </a>
+                <form class="col 1" action="{% url 'assoc_producer' beat.id producer.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Add</button>
+                </form>
             </div>
+            {% endfor %}
+
+            {% else %}
+            <h5> No Producers Available </h5>
+            {% endif %}
         </div>
     </div>
 

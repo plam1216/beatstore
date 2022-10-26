@@ -35,12 +35,36 @@
 </head>
 
 <body>
-    <header class="navbar-fixed">
+    <header>
+        <!-- MOBILE NAVBAR -->
 
         <!-- nav dropdown for 'Beats' -->
+        <ul class="sidenav" id="mobile-demo">
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'beats_index' %}">Shop</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'beats_create' %}">Add Beat</a></li>
+            <li><a href="{% url 'my_beats' %}">My Beats</a></li>
+            <li><a href="{% url 'producers_create' %}">Add Producer</a></li>
+            <li><a href="{% url 'producers_index' %}">All Producers</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'producers_index' %}">Producers</a></li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+        </ul>
+
+
+
+
+
+
+        <!-- nav dropdown for Beats -->
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="{% url 'my_beats' %}">My Beats</a></li>
             <li class="divider"></li>
+
             <li><a href="{% url 'beats_create' %}">Add Beat</a></li>
         </ul>
         <!-- nav dropdown for 'Producers' -->
@@ -50,7 +74,11 @@
             <li><a href="{% url 'producers_create' %}">Add Producer</a></li>
         </ul>
 
+
+
+
         <nav>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <div class="nav-wrapper">
                 <a href="{% url 'home' %}" style="height: 100%">
                     <img src="https://imgur.com/pQNNdDd.jpg" id="beatstars-logo" />
@@ -118,4 +146,8 @@
 
 <script>
     $(".dropdown-trigger").dropdown();
+
+    $(document).ready(function () {
+        $('.sidenav').sidenav();
+    });
 </script>

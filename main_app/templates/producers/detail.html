@@ -6,67 +6,68 @@
     </h3>
     <div>
         <div class="row">
-            <div class="col s4 beat-index-titles">
+            <div class="col s4 producer-desc-titles">
                 IG
             </div>
-            <div class="col s2 beat-index-titles">
+            <div class="col s2 producer-desc-titles">
                 Twitter
             </div>
-            <div class="col s2 beat-index-titles">
+            <div class="col s2 producer-desc-titles">
                 TikTok
             </div>
         </div>
-        <div class="row">
+        <div class="row producers-info" style="margin: 0;">
             <div class="col s4">
-                <p class="tracklist track">{{ producer.IG }}</p>
+                <p class="producers-list track">{{ producer.IG }}</p>
             </div>
             <div class="col s2">
-                <p class="tracklist track">{{ producer.twitter }}</p>
+                <p class="producers-list track">{{ producer.twitter }}</p>
             </div>
             <div class="col s2">
-                <p class="tracklist track">{{ producer.tiktok }}</p>
+                <p class="producers-list track">{{ producer.tiktok }}</p>
             </div>
             {% if user.is_authenticated %}
-            <div class="col s2">
+            <div class="col s2" id="prod-edit">
                 <a href="{% url 'producers_update' producer.id %}" style="margin-right: 10px">
                     <input class="btn" type="submit" value="Edit">
                 </a>
             </div>
-            <div class="col s2">
+            <div class="col s2" id="prod-delete">
                 <a href="{% url 'producers_delete' producer.id %}">
                     <input class="btn" type="submit" value="Delete">
                 </a>
             </div>
             {% endif %}
         </div>
-        <div class="col s6 divider"></div>
+        <div class="col s12 divider"></div>
 
         <br />
 
         <h4>Credits</h4>
         <div class="row">
             <div class="row">
-                <div class="col s6 offset-s1 beat-index-titles">
+                <div class="col s6 offset-s1 beats-desc-title">
                     Title
                 </div>
-                <div class="col s2 beat-index-titles">
+                <div class="col s2 beats-desc-title">
                     Genre
                 </div>
-                <div class="col s1 beat-index-titles">
+                <div class="col s1 beats-desc-title">
                     BPM
                 </div>
-                <div class="col s2 beat-index-titles">
+                <div class="col s2 beats-desc-title">
                     Key
                 </div>
             </div>
-    
+
             <!-- 'producer_beats' is passed down from 'producer_beats' function in '/main_app.views' -->
             {% for beat in producer_beats %}
             <div>
                 <a href="{% url 'beats_detail' beat.id %}">
                     <div class="row">
                         <div class="col s1">
-                            <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}" class="coverart coverart-index" />
+                            <img src="{{ awsurl }}/{{ beat.image }}" alt="{{ beat.name }}"
+                                class="coverart coverart-index" />
                         </div>
                         <div class="col s6">
                             <p class="tracklist track">{{ beat.name }}</p>
@@ -81,7 +82,7 @@
                             <p class="tracklist track">{{ beat.key }}</p>
                         </div>
                 </a>
-                <div class="col s11 offset-s1 divider"></div>
+                <div class="col s12 divider"></div>
             </div>
             {% endfor %}
         </div>

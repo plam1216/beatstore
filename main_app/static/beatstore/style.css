@@ -191,10 +191,30 @@ p {
         font-size: 1rem;
     }
     
+    .track-info {
+        display: none;
+    }
+
+    .row.audio-player {
+        margin: 0;
+    }
+
+    .producers-list > h4 {
+        font-size: 1.25rem;
+    }
+
+    .producers-list >  .row > a > p {
+        font-size: 1rem;
+    }
+
+    .credits-list > h4{
+        font-size: 1.25rem;
+    }
+
     .coverart-index {
         height: 250px;
         width: 250px;
-        margin-left: 45px;
+        margin-left: 10px;
     }
     
     .producer-desc-titles {

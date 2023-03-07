@@ -3,7 +3,7 @@
 #### A music marketplace where users can buy and sell beats.
 
 ## <a name="deployment"></a> Deployed Link
-- [BeatStars](https://beatstore-pl.herokuapp.com/)
+- [BeatStars](https://beatstore.onrender.com/)
 
 <img src="./documentation/beats.png" alt="beats"/>
 <img src="./documentation/beat_details_not_logged.png" alt="beat_details_not_logged_in"/>

@@ -15,7 +15,7 @@ jmespath==1.0.1
 libsass==0.21.0
 psycopg2==2.9.4
 python-dateutil==2.8.2
-python-dotenv==22.2.2
+python-dotenv==1.0.0
 rcssmin==1.1.0
 rjsmin==1.2.0
 s3transfer==0.6.0
